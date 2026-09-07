@@ -1,0 +1,121 @@
+"""
+Evaluate an already-trained drone model. Does NOT retrain.
+
+  1. locates best.pt (wherever Ultralytics actually put it)
+  2. runs the held-out TEST set once
+  3. saves annotated predictions on every test image
+  4. breaks recall down by drone size: small / medium / large
+
+    python evaluate.py
+    python evaluate.py --weights path/to/best.pt --conf 0.25
+"""
+import argparse
+from pathlib import Path
+
+import numpy as np
+
+DATA   = "dataset/data.yaml"
+IMAGES = Path("dataset/images/test")
+LABELS = Path("dataset/labels/test")
+
+# GT box area thresholds in pixels (COCO-style)
+SMALL_MAX  = 32 * 32
+MEDIUM_MAX = 96 * 96
+
+
+def find_weights():
+    hits = sorted(Path(".").rglob("drone_v1/weights/best.pt"))
+    if not hits:
+        hits = sorted(Path(".").rglob("best.pt"))
+    if not hits:
+        raise SystemExit("Could not find best.pt - pass --weights explicitly.")
+    return hits[0]
+
+
+def iou(a, b):
+    ax1, ay1, ax2, ay2 = a
+    bx1, by1, bx2, by2 = b
+    ix1, iy1 = max(ax1, bx1), max(ay1, by1)
+    ix2, iy2 = min(ax2, bx2), min(ay2, by2)
+    iw, ih = max(0.0, ix2 - ix1), max(0.0, iy2 - iy1)
+    inter = iw * ih
+    ua = (ax2-ax1)*(ay2-ay1) + (bx2-bx1)*(by2-by1) - inter
+    return inter / ua if ua > 0 else 0.0
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--weights", default=None)
+    ap.add_argument("--conf", type=float, default=0.25)
+    ap.add_argument("--imgsz", type=int, default=640)
+    ap.add_argument("--device", default="0")
+    args = ap.parse_args()
+
+    from ultralytics import YOLO
+    w = Path(args.weights) if args.weights else find_weights()
+    print(f"weights: {w.resolve()}\n")
+    model = YOLO(str(w))
+
+    print("=== TEST SET (held out, evaluated once) ===")
+    m = model.val(data=DATA, split="test", imgsz=args.imgsz,
+                  device=args.device, plots=True, name="drone_v1_test")
+    print(f"  Precision: {m.box.mp:.4f}")
+    print(f"  Recall:    {m.box.mr:.4f}")
+    print(f"  mAP50:     {m.box.map50:.4f}")
+    print(f"  mAP50-95:  {m.box.map:.4f}")
+
+    print("\n=== annotated predictions ===")
+    model.predict(source=str(IMAGES), imgsz=args.imgsz, device=args.device,
+                  conf=args.conf, save=True, name="drone_v1_test_predictions",
+                  exist_ok=True, verbose=False)
+
+    print("\n=== SIZE BREAKDOWN (recall at IoU>=0.5, "
+          f"conf>={args.conf}) ===")
+    import cv2
+    bands = {"small (<32x32)": [], "medium (32-96)": [], "large (>96x96)": []}
+    ious_by_band = {k: [] for k in bands}
+    for img_path in sorted(IMAGES.iterdir()):
+        if img_path.suffix.lower() not in (".jpg", ".jpeg", ".png"):
+            continue
+        lf = LABELS / (img_path.stem + ".txt")
+        if not lf.exists():
+            continue
+        lines = [l for l in lf.read_text().splitlines() if l.strip()]
+        if not lines:
+            continue
+        im = cv2.imread(str(img_path))
+        H, W = im.shape[:2]
+        gts = []
+        for line in lines:
+            _, cx, cy, nw, nh = (float(v) for v in line.split())
+            gts.append(((cx-nw/2)*W, (cy-nh/2)*H, (cx+nw/2)*W, (cy+nh/2)*H))
+
+        r = model.predict(source=str(img_path), imgsz=args.imgsz,
+                          device=args.device, conf=args.conf, verbose=False)[0]
+        preds = ([tuple(b) for b in r.boxes.xyxy.cpu().numpy()]
+                 if r.boxes is not None else [])
+
+        for g in gts:
+            area = (g[2]-g[0]) * (g[3]-g[1])
+            band = ("small (<32x32)" if area < SMALL_MAX
+                    else "medium (32-96)" if area < MEDIUM_MAX
+                    else "large (>96x96)")
+            best_iou = max((iou(g, p) for p in preds), default=0.0)
+            bands[band].append(1 if best_iou >= 0.5 else 0)
+            ious_by_band[band].append(best_iou)
+
+    print(f"  {'band':<18}{'GT boxes':>9}{'detected':>10}{'recall':>9}{'mean IoU':>10}")
+    for k, v in bands.items():
+        if not v:
+            print(f"  {k:<18}{0:>9}{'-':>10}{'-':>9}{'-':>10}")
+            continue
+        print(f"  {k:<18}{len(v):>9}{sum(v):>10}{sum(v)/len(v):>9.3f}"
+              f"{np.mean(ious_by_band[k]):>10.3f}")
+    total = [x for v in bands.values() for x in v]
+    if total:
+        print(f"  {'ALL':<18}{len(total):>9}{sum(total):>10}"
+              f"{sum(total)/len(total):>9.3f}")
+
+
+if __name__ == "__main__":
+    main()

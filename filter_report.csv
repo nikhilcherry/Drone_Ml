@@ -1,0 +1,545 @@
+split,filename,verdict,yolo_conf,motion_score,reason
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000012.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000024.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000036.jpg,keep,0.000,1.85,motion 1.85
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000048.jpg,keep,0.000,2.46,motion 2.46
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000060.jpg,keep,0.000,2.49,motion 2.49
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000072.jpg,keep,0.000,2.49,motion 2.49
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000084.jpg,keep,0.000,2.45,motion 2.45
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000096.jpg,keep,0.000,1.72,motion 1.72
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000108.jpg,review,0.000,1.35,"weak (yolo 0.00, motion 1.35)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000120.jpg,review,0.000,1.35,"weak (yolo 0.00, motion 1.35)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000132.jpg,review,0.000,0.82,"weak (yolo 0.00, motion 0.82)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000144.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000156.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000168.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000180.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000192.jpg,keep,0.000,1.61,motion 1.61
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000204.jpg,keep,0.000,1.61,motion 1.61
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000216.jpg,review,0.000,0.75,"weak (yolo 0.00, motion 0.75)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000228.jpg,review,0.000,0.18,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000240.jpg,removed,0.000,0.12,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000252.jpg,removed,0.000,0.12,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000264.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000276.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000288.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000300.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000312.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000324.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000336.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000348.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000360.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000372.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000384.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000396.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000408.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000420.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000432.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000444.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000456.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000468.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000480.jpg,review,0.000,0.08,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000492.jpg,review,0.000,0.08,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000504.jpg,keep,0.000,1.73,motion 1.73
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000516.jpg,keep,0.000,1.73,motion 1.73
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000528.jpg,review,0.000,1.02,"weak (yolo 0.00, motion 1.02)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000540.jpg,review,0.000,0.61,"weak (yolo 0.00, motion 0.61)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000552.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000564.jpg,review,0.000,1.23,"weak (yolo 0.00, motion 1.23)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000576.jpg,review,0.000,1.23,"weak (yolo 0.00, motion 1.23)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000588.jpg,review,0.000,1.05,"weak (yolo 0.00, motion 1.05)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000600.jpg,keep,0.000,1.65,motion 1.65
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000612.jpg,keep,0.000,1.65,motion 1.65
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000624.jpg,review,0.000,1.31,"weak (yolo 0.00, motion 1.31)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000636.jpg,review,0.000,1.31,"weak (yolo 0.00, motion 1.31)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000648.jpg,removed,0.000,0.01,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000660.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000672.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000684.jpg,removed,0.000,0.10,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000696.jpg,removed,0.000,0.10,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000708.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000720.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000732.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000756.jpg,review,0.000,0.74,"weak (yolo 0.00, motion 0.74)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000780.jpg,review,0.000,1.11,"weak (yolo 0.00, motion 1.11)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000792.jpg,review,0.000,1.30,"weak (yolo 0.00, motion 1.30)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000804.jpg,review,0.000,1.48,"weak (yolo 0.00, motion 1.48)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000816.jpg,review,0.000,1.48,"weak (yolo 0.00, motion 1.48)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000828.jpg,keep,0.000,1.53,motion 1.53
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000840.jpg,keep,0.000,1.53,motion 1.53
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000864.jpg,review,0.000,1.13,"weak (yolo 0.00, motion 1.13)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000876.jpg,review,0.000,1.13,"weak (yolo 0.00, motion 1.13)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000888.jpg,review,0.000,1.13,"weak (yolo 0.00, motion 1.13)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000900.jpg,review,0.000,1.40,"weak (yolo 0.00, motion 1.40)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000912.jpg,review,0.000,1.50,"weak (yolo 0.00, motion 1.50)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000924.jpg,review,0.000,1.50,"weak (yolo 0.00, motion 1.50)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000936.jpg,removed,0.000,0.01,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000948.jpg,review,0.000,0.59,"weak (yolo 0.00, motion 0.59)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame000960.jpg,review,0.000,0.59,"weak (yolo 0.00, motion 0.59)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001080.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001344.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001356.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001368.jpg,removed,0.000,0.09,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001380.jpg,removed,0.000,0.15,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001392.jpg,removed,0.000,0.15,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001404.jpg,review,0.000,0.40,"weak (yolo 0.00, motion 0.40)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001416.jpg,review,0.000,0.40,"weak (yolo 0.00, motion 0.40)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001428.jpg,review,0.000,0.38,"weak (yolo 0.00, motion 0.38)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001440.jpg,review,0.000,0.43,"weak (yolo 0.00, motion 0.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001452.jpg,review,0.000,0.43,"weak (yolo 0.00, motion 0.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001464.jpg,review,0.000,0.89,"weak (yolo 0.00, motion 0.89)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001476.jpg,review,0.000,1.43,"weak (yolo 0.00, motion 1.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001500.jpg,keep,0.000,2.05,motion 2.05
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001512.jpg,keep,0.000,2.37,motion 2.37
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001524.jpg,keep,0.000,2.37,motion 2.37
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001536.jpg,keep,0.000,1.77,motion 1.77
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001548.jpg,review,0.000,0.33,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001560.jpg,review,0.000,0.43,"weak (yolo 0.00, motion 0.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001572.jpg,review,0.000,0.63,"weak (yolo 0.00, motion 0.63)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001584.jpg,review,0.000,0.78,"weak (yolo 0.00, motion 0.78)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001596.jpg,review,0.000,1.13,"weak (yolo 0.00, motion 1.13)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001608.jpg,review,0.000,1.13,"weak (yolo 0.00, motion 1.13)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001620.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001632.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001644.jpg,removed,0.000,0.03,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001656.jpg,removed,0.000,0.30,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001668.jpg,review,0.000,0.55,"weak (yolo 0.00, motion 0.55)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001680.jpg,review,0.000,0.55,"weak (yolo 0.00, motion 0.55)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001728.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001740.jpg,removed,0.000,0.33,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001752.jpg,removed,0.000,0.33,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001764.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001776.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001788.jpg,review,0.000,0.75,"weak (yolo 0.00, motion 0.75)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001800.jpg,review,0.000,1.30,"weak (yolo 0.00, motion 1.30)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001812.jpg,review,0.000,1.30,"weak (yolo 0.00, motion 1.30)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001848.jpg,review,0.000,0.59,"weak (yolo 0.00, motion 0.59)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001920.jpg,removed,0.000,0.15,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001932.jpg,review,0.000,0.49,"weak (yolo 0.00, motion 0.49)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001944.jpg,review,0.000,0.49,"weak (yolo 0.00, motion 0.49)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001956.jpg,review,0.000,1.10,"weak (yolo 0.00, motion 1.10)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame001968.jpg,review,0.000,1.10,"weak (yolo 0.00, motion 1.10)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002028.jpg,removed,0.000,0.07,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002040.jpg,review,0.000,0.39,"weak (yolo 0.00, motion 0.39)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002052.jpg,review,0.000,0.39,"weak (yolo 0.00, motion 0.39)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002064.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002076.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002088.jpg,review,0.000,0.64,"weak (yolo 0.00, motion 0.64)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002100.jpg,review,0.000,0.64,"weak (yolo 0.00, motion 0.64)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002112.jpg,review,0.000,0.47,"weak (yolo 0.00, motion 0.47)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002124.jpg,review,0.000,1.44,"weak (yolo 0.00, motion 1.44)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002136.jpg,review,0.000,1.44,"weak (yolo 0.00, motion 1.44)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002148.jpg,review,0.000,0.55,"weak (yolo 0.00, motion 0.55)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002160.jpg,review,0.000,0.55,"weak (yolo 0.00, motion 0.55)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002172.jpg,review,0.000,0.38,"weak (yolo 0.00, motion 0.38)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002184.jpg,review,0.000,0.73,"weak (yolo 0.00, motion 0.73)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002196.jpg,review,0.000,0.73,"weak (yolo 0.00, motion 0.73)"
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002208.jpg,removed,0.000,0.14,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002220.jpg,removed,0.000,0.11,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002232.jpg,removed,0.000,0.11,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002244.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002256.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002268.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002280.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002292.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002304.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.15_frame002316.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000012.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000024.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000048.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000072.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000084.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000132.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000144.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000156.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000168.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000180.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000192.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000204.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000216.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000228.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000240.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000252.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000264.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000288.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000300.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000312.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17__1__frame000324.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000012.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000024.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000036.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000048.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000060.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000072.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000084.jpg,removed,0.000,0.12,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000096.jpg,review,0.000,0.38,"weak (yolo 0.00, motion 0.38)"
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000108.jpg,review,0.000,0.38,"weak (yolo 0.00, motion 0.38)"
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000120.jpg,removed,0.000,0.12,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.17_frame000132.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000012.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000024.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000036.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000048.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000060.jpg,review,0.000,0.58,"weak (yolo 0.00, motion 0.58)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000072.jpg,review,0.000,0.58,"weak (yolo 0.00, motion 0.58)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000204.jpg,review,0.000,0.71,"weak (yolo 0.00, motion 0.71)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000216.jpg,review,0.000,1.46,"weak (yolo 0.00, motion 1.46)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000240.jpg,review,0.000,1.46,"weak (yolo 0.00, motion 1.46)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000252.jpg,review,0.000,1.20,"weak (yolo 0.00, motion 1.20)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000276.jpg,review,0.000,1.20,"weak (yolo 0.00, motion 1.20)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000288.jpg,review,0.000,1.04,"weak (yolo 0.00, motion 1.04)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000300.jpg,review,0.000,1.05,"weak (yolo 0.00, motion 1.05)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000312.jpg,review,0.000,1.10,"weak (yolo 0.00, motion 1.10)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000324.jpg,review,0.000,1.32,"weak (yolo 0.00, motion 1.32)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000336.jpg,review,0.000,1.32,"weak (yolo 0.00, motion 1.32)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000396.jpg,review,0.000,1.23,"weak (yolo 0.00, motion 1.23)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000408.jpg,review,0.000,1.23,"weak (yolo 0.00, motion 1.23)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000420.jpg,review,0.000,1.19,"weak (yolo 0.00, motion 1.19)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000432.jpg,review,0.000,1.18,"weak (yolo 0.00, motion 1.18)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000444.jpg,keep,0.000,1.68,motion 1.68
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000456.jpg,keep,0.000,2.13,motion 2.13
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000468.jpg,keep,0.000,2.13,motion 2.13
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000480.jpg,review,0.000,0.77,"weak (yolo 0.00, motion 0.77)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000492.jpg,review,0.000,0.70,"weak (yolo 0.00, motion 0.70)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000504.jpg,review,0.000,0.82,"weak (yolo 0.00, motion 0.82)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000516.jpg,review,0.000,1.06,"weak (yolo 0.00, motion 1.06)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000528.jpg,review,0.000,1.10,"weak (yolo 0.00, motion 1.10)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000540.jpg,review,0.000,1.29,"weak (yolo 0.00, motion 1.29)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000552.jpg,review,0.000,1.29,"weak (yolo 0.00, motion 1.29)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000564.jpg,review,0.000,1.26,"weak (yolo 0.00, motion 1.26)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000576.jpg,review,0.000,1.17,"weak (yolo 0.00, motion 1.17)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000588.jpg,removed,0.000,0.18,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000600.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000612.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000624.jpg,review,0.000,0.47,"weak (yolo 0.00, motion 0.47)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000636.jpg,review,0.000,1.49,"weak (yolo 0.00, motion 1.49)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000648.jpg,review,0.000,1.49,"weak (yolo 0.00, motion 1.49)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000660.jpg,review,0.000,1.32,"weak (yolo 0.00, motion 1.32)"
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000672.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000684.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000696.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000708.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000720.jpg,removed,0.000,0.32,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000732.jpg,removed,0.000,0.32,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.18_frame000744.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000012.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000024.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000036.jpg,review,0.000,1.26,"weak (yolo 0.00, motion 1.26)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000048.jpg,review,0.000,1.26,"weak (yolo 0.00, motion 1.26)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000072.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000084.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000192.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000204.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000216.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000276.jpg,review,0.000,1.36,"weak (yolo 0.00, motion 1.36)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000288.jpg,keep,0.000,1.57,motion 1.57
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000300.jpg,keep,0.000,1.57,motion 1.57
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000324.jpg,review,0.000,1.05,"weak (yolo 0.00, motion 1.05)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000336.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000348.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000360.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000372.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000384.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000396.jpg,removed,0.000,0.18,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000408.jpg,review,0.000,1.32,"weak (yolo 0.00, motion 1.32)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000420.jpg,review,0.000,1.32,"weak (yolo 0.00, motion 1.32)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000432.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000444.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000456.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000516.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000528.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000540.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000552.jpg,review,0.000,0.44,"weak (yolo 0.00, motion 0.44)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000564.jpg,review,0.000,0.44,"weak (yolo 0.00, motion 0.44)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000576.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000588.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000600.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000612.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000624.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000636.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000648.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000660.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000672.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000684.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000696.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000708.jpg,review,0.000,0.56,"weak (yolo 0.00, motion 0.56)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000720.jpg,review,0.000,0.56,"weak (yolo 0.00, motion 0.56)"
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000732.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000744.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000756.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000768.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000780.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000792.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000804.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000816.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000828.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000840.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000852.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000864.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000876.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000888.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.19_frame000900.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000012.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000024.jpg,removed,0.000,0.33,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000036.jpg,removed,0.000,0.33,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000048.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000060.jpg,review,0.000,0.71,"weak (yolo 0.00, motion 0.71)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000072.jpg,review,0.000,0.94,"weak (yolo 0.00, motion 0.94)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000084.jpg,review,0.000,1.09,"weak (yolo 0.00, motion 1.09)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000096.jpg,review,0.000,1.09,"weak (yolo 0.00, motion 1.09)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000108.jpg,removed,0.000,0.33,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000120.jpg,removed,0.000,0.22,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000132.jpg,review,0.000,0.81,"weak (yolo 0.00, motion 0.81)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000144.jpg,review,0.000,0.81,"weak (yolo 0.00, motion 0.81)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000156.jpg,removed,0.000,0.27,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000168.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000180.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000192.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000204.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000216.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000228.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000240.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000252.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000264.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000276.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000288.jpg,removed,0.000,0.15,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000300.jpg,removed,0.000,0.15,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000312.jpg,review,0.000,0.43,"weak (yolo 0.00, motion 0.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000324.jpg,review,0.000,0.43,"weak (yolo 0.00, motion 0.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000336.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000348.jpg,removed,0.000,0.03,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000360.jpg,removed,0.000,0.03,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000372.jpg,removed,0.000,0.22,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000384.jpg,review,0.000,0.41,"weak (yolo 0.00, motion 0.41)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000396.jpg,review,0.000,0.41,"weak (yolo 0.00, motion 0.41)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000408.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000420.jpg,review,0.000,0.42,"weak (yolo 0.00, motion 0.42)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000432.jpg,review,0.000,1.17,"weak (yolo 0.00, motion 1.17)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000444.jpg,review,0.000,1.17,"weak (yolo 0.00, motion 1.17)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000456.jpg,review,0.000,0.95,"weak (yolo 0.00, motion 0.95)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000468.jpg,review,0.000,0.93,"weak (yolo 0.00, motion 0.93)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000480.jpg,keep,0.000,1.81,motion 1.81
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000492.jpg,keep,0.000,1.81,motion 1.81
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000504.jpg,review,0.000,1.33,"weak (yolo 0.00, motion 1.33)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000516.jpg,review,0.000,0.10,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000528.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000540.jpg,removed,0.000,0.12,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000552.jpg,removed,0.000,0.30,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000564.jpg,review,0.000,0.49,"weak (yolo 0.00, motion 0.49)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000576.jpg,review,0.000,0.74,"weak (yolo 0.00, motion 0.74)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000588.jpg,review,0.000,0.74,"weak (yolo 0.00, motion 0.74)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000600.jpg,removed,0.000,0.32,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000612.jpg,removed,0.000,0.32,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000624.jpg,review,0.000,0.43,"weak (yolo 0.00, motion 0.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000636.jpg,review,0.000,0.43,"weak (yolo 0.00, motion 0.43)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000648.jpg,removed,0.000,0.22,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000660.jpg,removed,0.000,0.22,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000672.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000684.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000696.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000708.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000720.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000732.jpg,removed,0.000,0.00,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000744.jpg,review,0.000,0.85,"weak (yolo 0.00, motion 0.85)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000756.jpg,review,0.000,0.85,"weak (yolo 0.00, motion 0.85)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000768.jpg,review,0.000,0.94,"weak (yolo 0.00, motion 0.94)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000780.jpg,review,0.000,0.94,"weak (yolo 0.00, motion 0.94)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000792.jpg,review,0.000,0.99,"weak (yolo 0.00, motion 0.99)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000804.jpg,review,0.000,0.99,"weak (yolo 0.00, motion 0.99)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000816.jpg,keep,0.000,2.00,motion 2.00
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000852.jpg,keep,0.000,2.00,motion 2.00
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000864.jpg,review,0.000,1.26,"weak (yolo 0.00, motion 1.26)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000900.jpg,review,0.000,1.26,"weak (yolo 0.00, motion 1.26)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000912.jpg,keep,0.000,1.65,motion 1.65
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000924.jpg,keep,0.000,1.98,motion 1.98
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000936.jpg,keep,0.000,1.98,motion 1.98
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000948.jpg,review,0.000,0.49,"weak (yolo 0.00, motion 0.49)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000960.jpg,review,0.000,0.24,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000972.jpg,removed,0.000,0.34,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame000984.jpg,removed,0.000,0.34,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001032.jpg,removed,0.000,0.18,no evidence
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001044.jpg,review,0.000,0.57,"weak (yolo 0.00, motion 0.57)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001056.jpg,review,0.000,1.36,"weak (yolo 0.00, motion 1.36)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001068.jpg,review,0.000,1.36,"weak (yolo 0.00, motion 1.36)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001164.jpg,review,0.000,0.48,"weak (yolo 0.00, motion 0.48)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001176.jpg,review,0.000,0.48,"weak (yolo 0.00, motion 0.48)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001188.jpg,review,0.000,0.76,"weak (yolo 0.00, motion 0.76)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001200.jpg,keep,0.000,2.57,motion 2.57
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001272.jpg,keep,0.000,2.57,motion 2.57
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001284.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001416.jpg,review,0.000,0.66,"weak (yolo 0.00, motion 0.66)"
+train,WhatsApp_Video_2026-09-07_at_18.27.25_frame001428.jpg,review,0.000,0.66,"weak (yolo 0.00, motion 0.66)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000006.jpg,keep,0.000,1.78,motion 1.78
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000012.jpg,keep,0.000,2.03,motion 2.03
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000018.jpg,keep,0.000,2.03,motion 2.03
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000024.jpg,review,0.000,1.22,"weak (yolo 0.00, motion 1.22)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000030.jpg,review,0.000,0.08,"no evidence, but a neighbouring frame has a drone"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000036.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000042.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000048.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000054.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000060.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000066.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000072.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000078.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000084.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000090.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000096.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000102.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000108.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000114.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000120.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000126.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000132.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000138.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000144.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000150.jpg,removed,0.000,0.00,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000156.jpg,removed,0.000,0.08,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000162.jpg,review,0.000,0.80,"weak (yolo 0.00, motion 0.80)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000168.jpg,review,0.000,1.12,"weak (yolo 0.00, motion 1.12)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000174.jpg,keep,0.000,1.72,motion 1.72
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000180.jpg,keep,0.000,1.95,motion 1.95
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000186.jpg,keep,0.000,2.56,motion 2.56
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000192.jpg,keep,0.000,2.56,motion 2.56
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000204.jpg,keep,0.000,1.90,motion 1.90
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000210.jpg,keep,0.000,1.73,motion 1.73
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000216.jpg,review,0.000,0.80,"weak (yolo 0.00, motion 0.80)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000222.jpg,keep,0.000,1.58,motion 1.58
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000228.jpg,keep,0.000,1.58,motion 1.58
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000234.jpg,keep,0.000,1.64,motion 1.64
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000240.jpg,keep,0.000,1.69,motion 1.69
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000246.jpg,keep,0.000,2.03,motion 2.03
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000252.jpg,keep,0.000,2.03,motion 2.03
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000342.jpg,review,0.000,0.38,"weak (yolo 0.00, motion 0.38)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000348.jpg,review,0.000,0.22,"no evidence, but a neighbouring frame has a drone"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000354.jpg,removed,0.000,0.22,no evidence
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000360.jpg,review,0.000,0.42,"weak (yolo 0.00, motion 0.42)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000366.jpg,review,0.000,0.82,"weak (yolo 0.00, motion 0.82)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000372.jpg,keep,0.000,1.53,motion 1.53
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000378.jpg,keep,0.000,2.01,motion 2.01
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000384.jpg,keep,0.000,2.01,motion 2.01
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000396.jpg,review,0.000,1.08,"weak (yolo 0.00, motion 1.08)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000402.jpg,review,0.000,1.06,"weak (yolo 0.00, motion 1.06)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000408.jpg,review,0.000,0.88,"weak (yolo 0.00, motion 0.88)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000414.jpg,keep,0.000,2.50,motion 2.50
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000420.jpg,keep,0.000,2.50,motion 2.50
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000426.jpg,keep,0.000,1.96,motion 1.96
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000462.jpg,review,0.000,0.91,"weak (yolo 0.00, motion 0.91)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000468.jpg,review,0.000,0.91,"weak (yolo 0.00, motion 0.91)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000474.jpg,review,0.000,0.68,"weak (yolo 0.00, motion 0.68)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000480.jpg,review,0.000,1.17,"weak (yolo 0.00, motion 1.17)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000486.jpg,review,0.000,1.40,"weak (yolo 0.00, motion 1.40)"
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000492.jpg,keep,0.000,1.82,motion 1.82
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000498.jpg,keep,0.000,1.96,motion 1.96
+val,WhatsApp_Video_2026-09-07_at_18.23.15_frame000504.jpg,keep,0.000,1.96,motion 1.96
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000006.jpg,review,0.000,1.38,"weak (yolo 0.00, motion 1.38)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000012.jpg,keep,0.000,1.71,motion 1.71
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000018.jpg,keep,0.000,1.71,motion 1.71
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000024.jpg,review,0.000,0.91,"weak (yolo 0.00, motion 0.91)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000030.jpg,review,0.000,0.00,"no evidence, but a neighbouring frame has a drone"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000036.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000042.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000048.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000054.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000060.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000066.jpg,removed,0.000,0.04,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000072.jpg,removed,0.000,0.13,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000078.jpg,removed,0.000,0.20,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000084.jpg,review,0.000,0.38,"weak (yolo 0.00, motion 0.38)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000090.jpg,review,0.000,0.51,"weak (yolo 0.00, motion 0.51)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000096.jpg,review,0.000,0.52,"weak (yolo 0.00, motion 0.52)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000102.jpg,review,0.000,0.69,"weak (yolo 0.00, motion 0.69)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000108.jpg,review,0.000,0.71,"weak (yolo 0.00, motion 0.71)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000114.jpg,review,0.000,0.75,"weak (yolo 0.00, motion 0.75)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000120.jpg,review,0.000,0.79,"weak (yolo 0.00, motion 0.79)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000126.jpg,review,0.000,0.79,"weak (yolo 0.00, motion 0.79)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000162.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000168.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000174.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000180.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000186.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000192.jpg,removed,0.000,0.14,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000198.jpg,removed,0.000,0.14,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000246.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000252.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000258.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000264.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000270.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000276.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000282.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000288.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000294.jpg,removed,0.000,0.06,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000300.jpg,review,0.000,0.52,"weak (yolo 0.00, motion 0.52)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000306.jpg,review,0.000,0.79,"weak (yolo 0.00, motion 0.79)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000312.jpg,review,0.000,1.04,"weak (yolo 0.00, motion 1.04)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000318.jpg,review,0.000,1.12,"weak (yolo 0.00, motion 1.12)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000324.jpg,review,0.000,1.12,"weak (yolo 0.00, motion 1.12)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000330.jpg,review,0.000,0.95,"weak (yolo 0.00, motion 0.95)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000336.jpg,review,0.000,0.47,"weak (yolo 0.00, motion 0.47)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000342.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000348.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000354.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000360.jpg,removed,0.000,0.01,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000366.jpg,review,0.000,0.36,"weak (yolo 0.00, motion 0.36)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000372.jpg,review,0.000,0.36,"weak (yolo 0.00, motion 0.36)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000384.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000390.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000396.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000402.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000408.jpg,review,0.000,0.36,"weak (yolo 0.00, motion 0.36)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000414.jpg,review,0.000,0.36,"weak (yolo 0.00, motion 0.36)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000540.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000546.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000552.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000558.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000564.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000570.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000576.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000582.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000588.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000594.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000600.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000606.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000612.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000618.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000624.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000630.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000636.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000642.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000648.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000654.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000660.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000666.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000672.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000678.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000684.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000690.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000696.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000702.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000708.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000714.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000720.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000726.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000732.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000738.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000744.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000750.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000756.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000762.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000768.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000774.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000780.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000786.jpg,review,0.000,0.49,"weak (yolo 0.00, motion 0.49)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000792.jpg,review,0.000,1.04,"weak (yolo 0.00, motion 1.04)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000810.jpg,review,0.000,1.04,"weak (yolo 0.00, motion 1.04)"
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000816.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000822.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000828.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000834.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000840.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000846.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000852.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000858.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000864.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000870.jpg,removed,0.000,0.00,no evidence
+test,WhatsApp_Video_2026-09-07_at_18.23.23_frame000876.jpg,removed,0.000,0.00,no evidence

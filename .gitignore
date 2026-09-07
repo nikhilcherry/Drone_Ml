@@ -1,0 +1,24 @@
+# Byte-compiled / Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyTorch / YOLO weights & models
+*.pt
+*.part
+weights/
+
+# Datasets, Videos, and Runs
+dataset/
+videos/
+runs/
+_to_delete/
+
+# Archives & Temporary files
+*.zip
+ziOJ0p7B
+
+# Environment / IDE
+.vscode/
+.idea/
+*.log

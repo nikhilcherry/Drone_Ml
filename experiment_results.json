@@ -1,0 +1,13 @@
+[
+  {
+    "name": "v2_hires",
+    "weights": "C:\\Users\\rajsh\\Downloads\\Drone_vids\\runs\\detect\\runs\\detect\\v2_hires\\weights\\best.pt",
+    "imgsz": 960,
+    "model": "yolo11n.pt",
+    "minutes": 18.0,
+    "val_P": 0.7313,
+    "val_R": 0.575,
+    "val_mAP50": 0.6782,
+    "val_mAP5095": 0.2775
+  }
+]
