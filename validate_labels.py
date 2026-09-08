@@ -10,21 +10,21 @@ Checks, per split:
   - coordinates in [0,1], width/height > 0
   - boxes stay inside the image
   - no duplicate images across train/val/test (content hash)
-  - flags multiple boxes on one image (one drone per frame was the rule)
+  - flags multiple boxes on one image (one drone per frame was the rule for
+    the local footage; public data legitimately has several, so pass
+    --allow-multi when checking dataset_combined)
 
     python validate_labels.py
+    python validate_labels.py --dataset dataset_combined --allow-multi
 """
+import argparse
 import hashlib
 from collections import defaultdict
 from pathlib import Path
 
 import cv2
 
-DATASET = Path("dataset")
-IMAGES  = DATASET / "images"
-LABELS  = DATASET / "labels"
-SPLITS  = ("train", "val", "test")
-EXTS    = (".jpg", ".jpeg", ".png", ".bmp")
+EXTS = (".jpg", ".jpeg", ".png", ".bmp", ".webp")
 
 
 def check_line(line):
@@ -51,6 +51,19 @@ def check_line(line):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="dataset",
+                    help="dataset folder to check (default: dataset)")
+    ap.add_argument("--allow-multi", action="store_true",
+                    help="do not warn about images with more than one box")
+    args = ap.parse_args()
+
+    DATASET = Path(args.dataset)
+    IMAGES, LABELS = DATASET / "images", DATASET / "labels"
+    SPLITS = tuple(s for s in ("train", "val", "val_ext", "test")
+                   if (IMAGES / s).is_dir()) or ("train", "val", "test")
+    print(f"checking {DATASET.resolve()}  splits: {', '.join(SPLITS)}\n")
+
     errors, warnings = [], []
     stats = {}
     hashes = defaultdict(list)
@@ -86,7 +99,7 @@ def main():
             if not lines:
                 n_neg += 1
                 continue
-            if len(lines) > 1:
+            if len(lines) > 1 and not args.allow_multi:
                 warnings.append(f"{split}/{lf.name}: {len(lines)} boxes "
                                 f"(one drone per frame was the rule)")
             ok_any = False

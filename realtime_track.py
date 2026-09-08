@@ -5,15 +5,23 @@ Real-time drone detection + tracking with the V1 model.
     python realtime_track.py --source 1               # another camera
     python realtime_track.py --source rtsp://user:pass@ip:554/stream
     python realtime_track.py --source myclip.mp4 --save
+    python realtime_track.py --weights v3.pt --imgsz 960 --tta
+    python realtime_track.py --weights v3.pt --source clip.mp4 --tile
 
 ByteTrack keeps a drone's ID alive across frames where detection drops out,
 which matters here: V1 detects intermittently, so raw per-frame boxes flicker.
 
 Press Q to quit.
 
+--tile runs sliced inference (tiled_infer.py): far better on distant drones,
+several times slower, and it turns tracking off because it bypasses the
+Ultralytics tracker. Use it on recorded footage, not on a live feed.
+
 HONEST LIMITATION: V1 was trained on drones against sky and buildings only.
 Against grass, trees, or any unseen background it will detect nothing at all -
-tracking cannot recover a target the detector never finds even once.
+tracking cannot recover a target the detector never finds even once. A model
+trained by train_v3.py on public data is the fix for that; TTA and tiling only
+sharpen what the detector can already see.
 """
 import argparse, time
 from collections import deque
@@ -40,6 +48,12 @@ def main():
     ap.add_argument("--imgsz", type=int, default=640)
     ap.add_argument("--device", default="0")
     ap.add_argument("--save", action="store_true", help="write annotated mp4")
+    ap.add_argument("--tta", action="store_true",
+                    help="test-time augmentation: more recall, fewer FPS")
+    ap.add_argument("--tile", action="store_true",
+                    help="sliced inference for distant drones; disables tracking")
+    ap.add_argument("--tile-size", type=int, default=640)
+    ap.add_argument("--overlap", type=float, default=0.25)
     args = ap.parse_args()
 
     from ultralytics import YOLO
@@ -59,6 +73,10 @@ def main():
         writer = cv2.VideoWriter("realtime_output.mp4",
                                  cv2.VideoWriter_fourcc(*"mp4v"), 25, (W, H))
 
+    if args.tile:
+        from tiled_infer import predict_tiled
+        print("tiled inference: no track IDs (the tracker needs whole frames)")
+
     fps_hist = deque(maxlen=30)
     seen, hits = 0, 0
     print("Running. Q to quit.\n")
@@ -67,26 +85,35 @@ def main():
         if not ok:
             break
         t0 = time.time()
-        # persist=True keeps track IDs alive between calls
-        r = model.track(frame, imgsz=args.imgsz, device=args.device,
-                        conf=args.conf, persist=True, tracker="bytetrack.yaml",
-                        verbose=False)[0]
+        if args.tile:
+            det = predict_tiled(model, frame, tile=args.tile_size,
+                                overlap=args.overlap, conf=args.conf,
+                                device=args.device, full_imgsz=args.imgsz,
+                                tta=args.tta)
+            boxes = [(b[:4], b[4], None) for b in det]
+        else:
+            # persist=True keeps track IDs alive between calls
+            r = model.track(frame, imgsz=args.imgsz, device=args.device,
+                            conf=args.conf, persist=True, augment=args.tta,
+                            tracker="bytetrack.yaml", verbose=False)[0]
+            boxes = []
+            if r.boxes is not None and len(r.boxes):
+                ids = (r.boxes.id.int().tolist()
+                       if r.boxes.id is not None else [None] * len(r.boxes))
+                boxes = list(zip(r.boxes.xyxy.cpu().numpy(),
+                                 r.boxes.conf.cpu().numpy(), ids))
         fps_hist.append(1.0 / max(1e-6, time.time() - t0))
         seen += 1
 
-        n = 0
-        if r.boxes is not None and len(r.boxes):
-            n = len(r.boxes)
+        n = len(boxes)
+        if n:
             hits += 1
-            ids = (r.boxes.id.int().tolist()
-                   if r.boxes.id is not None else [None] * n)
-            for b, c, tid in zip(r.boxes.xyxy.cpu().numpy(),
-                                 r.boxes.conf.cpu().numpy(), ids):
-                x1, y1, x2, y2 = (int(v) for v in b)
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
-                tag = f"drone {c:.2f}" + (f"  id{tid}" if tid is not None else "")
-                cv2.putText(frame, tag, (x1, max(14, y1 - 6)),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 1)
+        for b, c, tid in boxes:
+            x1, y1, x2, y2 = (int(v) for v in b)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
+            tag = f"drone {c:.2f}" + (f"  id{tid}" if tid is not None else "")
+            cv2.putText(frame, tag, (x1, max(14, y1 - 6)),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 1)
 
         fps = sum(fps_hist) / len(fps_hist)
         cv2.putText(frame, f"{fps:5.1f} FPS   detections: {n}   "

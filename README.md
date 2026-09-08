@@ -4,7 +4,8 @@ Single-class (`0 = drone`) detector trained on handheld video of a quadcopter.
 Covers the full pipeline: raw video → frames → manual labels → training →
 evaluation → real-time tracking.
 
-**Current best model**
+**Current best model** — V2. V3 (local footage + public drone data, see below)
+lands in `runs\detect\v3_finetune\weights\best.pt`.
 
 ```
 runs\detect\runs\detect\v2_hires\weights\best.pt
@@ -93,7 +94,8 @@ dataset/
 ## Pipeline
 
 Run from this folder. Requires `pip install ultralytics opencv-python` and a
-CUDA build of torch (`train.py` refuses to run on CPU).
+CUDA build of torch (`train.py` refuses to run on CPU). The V3 steps below add
+`pip install roboflow`, and only for sources fetched through Roboflow.
 
 | Step | Command |
 |---|---|
@@ -107,6 +109,17 @@ CUDA build of torch (`train.py` refuses to run on CPU).
 | 8. Evaluate on test + size breakdown | `python evaluate.py` |
 | 9. Live detection + ByteTrack | `python realtime_track.py --imgsz 960` |
 
+### V3 pipeline — public data (see "V3: more data, from the internet" below)
+
+| Step | Command |
+|---|---|
+| A. See what public data is available | `python fetch_public_data.py --list` |
+| B. Pull and normalise a source | `python fetch_public_data.py --source <name> --rf-key KEY` |
+| C. Merge with the local footage | `python build_combined_dataset.py --apply --ext-val 0.05` |
+| D. Check the merge | `python validate_labels.py --dataset dataset_combined --allow-multi` |
+| E. Pretrain on everything, fine-tune on local | `python train_v3.py` |
+| F. Free accuracy, no retraining | `python evaluate.py --weights <best.pt> --imgsz 960 --tta --tile` |
+
 ### Other scripts
 
 | Script | Purpose |
@@ -119,6 +132,10 @@ CUDA build of torch (`train.py` refuses to run on CPU).
 | `capture_negatives.py` | Grabs webcam background frames as negatives |
 | `filter_drone_frames.py` | Frame filter. **Useless with COCO weights** — only worth running with a trained drone model via `--model best.pt` |
 | `propose_boxes.py` | Auto box proposals. **Do not use** — proposals landed on people and trees, not drones |
+| `fetch_public_data.py` | Downloads public drone datasets and converts any of them (YOLO / COCO / VOC, single- or multi-class) to this project's single-class format under `external/` |
+| `build_combined_dataset.py` | Merges `external/` into `dataset/` as `dataset_combined/`. Local val/test stay untouched; every external image is hash-checked against them for leakage |
+| `train_v3.py` | Two-stage training: pretrain on the combined set, fine-tune on the local footage |
+| `tiled_infer.py` | Sliced inference — the small-object fix that needs no retraining. Also importable: `predict_tiled(model, frame)` |
 
 ---
 
@@ -141,16 +158,114 @@ it by hand.
 
 ---
 
-## Next: V3
+## V3: more data, from the internet
 
-In priority order.
+The README above says it plainly: the four known limitations are all one
+problem, and **the fix is footage, not hyperparameters**. Filming ~12 new clips
+is still the best thing you can do. Until that happens, public drone datasets
+are the same medicine from a different bottle — thousands of drones over grass,
+trees, roads and open sky, at distances this dataset does not contain.
 
-1. **Film varied backgrounds** — grass, trees, roads, overcast, dusk. Biggest
-   single gap; unseen backgrounds are a total failure, not a degradation.
-2. **Film at distance** — 50 m and 100 m, for the small-object case that is the
-   point of the project.
+```bat
+python fetch_public_data.py --list
+python fetch_public_data.py --source roboflow_drone_detection --rf-key YOUR_KEY
+python build_combined_dataset.py --apply --ext-val 0.05
+python validate_labels.py --dataset dataset_combined --allow-multi
+python train_v3.py
+```
+
+### How the merge protects the numbers
+
+```
+dataset_combined/
+├── images/train     local train + every external source
+├── images/val       local val,  UNCHANGED
+├── images/test      local test, UNCHANGED
+└── images/val_ext   a slice of public data held out (optional, --ext-val)
+```
+
+Val and test stay exactly the local footage, so a V3 score is directly
+comparable to the V2 row in the table above. Public data is a training aid, not
+a new yardstick. Every external image is content-hashed against local val and
+test and dropped on a match, so a public dataset that happens to contain a frame
+you already have cannot leak.
+
+`val_ext` is the number that answers limitation #1. The local val cannot tell
+you whether the model learned *drones* or *this courtyard*; a held-out public
+split can. It is reported, never selected on.
+
+### What the normaliser handles
+
+Public datasets arrive in every shape. `fetch_public_data.py` takes YOLO,
+COCO `instances_*.json` and Pascal VOC, in `images/train`, `train/images` or
+flat layouts, and emits one format: class `0 = drone`, boxes clamped to [0,1].
+
+Multi-class sources are mapped by class **name**, and narrowly — `bird`,
+`person`, `plane` and `helicopter` are *not* drones, and letting them through
+would poison a single-class detector. An image whose only boxes were dropped
+becomes a **negative**, which is exactly what this project wants more of:
+negatives took precision from 0.616 to 0.776. A drone-vs-bird source is
+therefore worth more than its drone count suggests — the birds become hard
+negatives at drone-like scale.
+
+### Why two stages
+
+Stage A trains on the combined set: enough varied data to justify `yolo11s` and
+to teach what a drone *is*. Stage B fine-tunes that on the local footage alone
+at `lr0=0.0005`, so the model specialises back onto the actual camera and scene
+without forgetting stage A. Stage B keeps the V2 augmentation recipe on purpose
+— heavier augmentation cost ~0.20 mAP50 on this footage, and that finding still
+stands for the local data even though stage A augments harder on a much larger
+set.
+
+Selection is on the local val, the test set is still evaluated once, by the
+winner only.
+
+If stage B overfits the 294 local images (val mAP falls below stage A), try
+`--freeze-b 10`, or skip it: `python train_v3.py --skip-b`.
+
+### Accuracy without retraining
+
+Two switches on an existing model:
+
+```bat
+python evaluate.py --weights best.pt --imgsz 960 --tta
+python evaluate.py --weights best.pt --imgsz 960 --tile --tile-size 640
+```
+
+- `--tta` — flips and scales at inference, merged. A few points of recall for
+  roughly 3x the time.
+- `--tile` — sliced inference. The drone is ~30x15 px in an 848x480 frame, so
+  the network sees it tiny no matter what `imgsz` is; a 640 px crop upscaled to
+  the network input shows it several times larger. This is the switch that
+  moves the `small (<32x32)` band in the size breakdown. `realtime_track.py
+  --tile` does the same on recorded footage (it disables track IDs — the
+  tracker needs whole frames).
+
+Neither changes the weights, so both are honest to report as long as you say
+which one produced a number.
+
+### Expect the metrics to move, and read them carefully
+
+More data should raise recall on unseen backgrounds a lot — from "0.00 IoU over
+a green field", almost anything is an improvement. The **local** test number may
+move much less, or dip: it measures one video of one courtyard, which V2 already
+fit well. That is not a regression in the model, it is the local test set being
+too small and too narrow to see the improvement. With ~42 test boxes,
+differences under ~0.1 mAP50 are noise — the README said so for V2 and it is
+just as true for V3.
+
+Report three numbers, always together: local val, `val_ext`, and local test.
+
+### Still the priority list
+
+Public data narrows the gap; it does not close it. Nothing online was shot on
+your camera, at your angles, in your light.
+
+1. **Film varied backgrounds** — grass, trees, roads, overcast, dusk.
+2. **Film at distance** — 50 m and 100 m.
 3. **More videos, not more frames per video.**
 4. **3–4 videos per split** so val and test stop disagreeing by 0.09.
-5. **Tighter boxes** — mAP50-95 0.295 vs mAP50 0.771 says localization is loose;
-   some labels carry extra sky margin.
-6. **Then try 1280px / tiled inference** — only once genuinely small drones exist.
+5. **Tighter boxes** — mAP50-95 0.295 vs mAP50 0.771 says localization is loose.
+6. **1280px / tiled inference** — `tiled_infer.py` exists now; it earns its
+   keep once genuinely small drones are in the data.
