@@ -1,0 +1,57 @@
+{
+  "train_minutes": 315.5,
+  "weights": "/home/nikhil/Projects/Drone_Ml/runs/detect/runs/detect/public_s/weights/best.pt",
+  "imgsz": 640,
+  "val": {
+    "P": 0.9333,
+    "R": 0.8409,
+    "mAP50": 0.9035,
+    "mAP5095": 0.554
+  },
+  "test": {
+    "P": 0.9408,
+    "R": 0.8342,
+    "mAP50": 0.8991,
+    "mAP5095": 0.5562
+  },
+  "test_tta": {
+    "P": 0.9072,
+    "R": 0.8126,
+    "mAP50": 0.8906,
+    "mAP5095": 0.5508
+  },
+  "test_per_source": {
+    "rf_anti_drone": {
+      "gt": 745,
+      "hit": 491,
+      "fp": 211,
+      "imgs": 810
+    },
+    "rf_anti_uav": {
+      "gt": 1979,
+      "hit": 1770,
+      "fp": 91,
+      "imgs": 1962
+    },
+    "rf_drone_yolov7": {
+      "gt": 345,
+      "hit": 324,
+      "fp": 17,
+      "imgs": 316
+    }
+  },
+  "test_by_size": {
+    "small": {
+      "gt": 2004,
+      "hit": 1578
+    },
+    "medium": {
+      "gt": 440,
+      "hit": 404
+    },
+    "large": {
+      "gt": 625,
+      "hit": 603
+    }
+  }
+}

@@ -1,25 +1,32 @@
-# Drone Detection — YOLO11n
+# Drone Detection — YOLO11
 
-Single-class (`0 = drone`) detector trained on handheld video of a quadcopter.
-Covers the full pipeline: raw video → frames → manual labels → training →
-evaluation → real-time tracking.
+Single-class (`0 = drone`) detector. Covers the full pipeline: raw video →
+frames → manual labels → training → evaluation → real-time tracking, plus a
+second track that trains on public drone data when local footage is scarce.
 
-**Current best model** — V2. V3 (local footage + public drone data, see below)
-lands in `runs\detect\v3_finetune\weights\best.pt`.
+**Two models, two jobs — they are not ranked against each other:**
 
-```
-runs\detect\runs\detect\v2_hires\weights\best.pt
-```
+| | trained on | best for | score |
+|---|---|---|---|
+| **V4** `yolo11s` | 24,699 public images | drones in general: grass, trees, sky, distance | mAP50 **0.899** on 3,069 leak-free test boxes |
+| **V2** `yolo11n` | 294 local frames | *this* camera in *this* courtyard | mAP50 0.771 on 42 test boxes |
 
-Run it live (the `--imgsz 960` is **required** — at 640 you lose most of the accuracy):
+The two numbers measure different datasets and are not comparable. V4 has never
+seen the local footage; V2 fails completely on anything but it.
 
 ```bat
+:: V4 - the general detector
+python realtime_track.py --weights "runs/detect/public_s/weights/best.pt" --imgsz 640
+
+:: V2 - the local one. --imgsz 960 is REQUIRED; at 640 you lose most of the accuracy
 python realtime_track.py --weights "runs\detect\runs\detect\v2_hires\weights\best.pt" --imgsz 960
 ```
 
+Do not pass `--tta` to V4: it measurably hurts (see V4 results below).
+
 ---
 
-## Results
+## Results — V2, local footage
 
 Test set: 67 images, 42 ground-truth boxes, 25 background images.
 
@@ -346,6 +353,74 @@ such box in 280. This set can finally measure the distance case the project
 was built for, and it is a much harder problem than the courtyard footage -
 scores here are not comparable to the V2 row above, and are not meant to be.
 
+
+### Results
+
+`yolo11s` · 640px · batch 12 · 70 epochs · 5h15m on an RTX 5050 (8 GB).
+Test set: 3,088 images, 3,069 boxes, evaluated once by the val-selected model.
+
+| | val | **test** |
+|---|---|---|
+| Precision | 0.933 | **0.941** |
+| Recall | 0.841 | **0.834** |
+| mAP50 | 0.903 | **0.899** |
+| mAP50-95 | 0.554 | **0.556** |
+
+5.3 ms/image inference (~190 FPS), so the step up from `yolo11n` costs nothing
+that matters in the field.
+
+**Val and test agree to within 0.004.** That is the point of the grouped split.
+The local V2 numbers disagreed by 0.09 across splits, which is why this README
+warns that differences under 0.1 there are noise. With 3,069 test boxes and no
+leakage, 0.899 is a measurement rather than an estimate. It is *not* comparable
+to the V2 row - different data, and a far harder one.
+
+#### Recall by drone size - where the missing 10% lives
+
+| GT box size | boxes | recall |
+|---|---|---|
+| small (<32x32) | 2,004 | **0.787** |
+| medium | 440 | 0.918 |
+| large | 625 | 0.965 |
+
+On drones large enough to see, this is a 92-97% detector. The entire deficit is
+the sub-32px band, which is two-thirds of the test set. Any headline number for
+this project should carry the target size with it.
+
+#### Recall by source
+
+| Source | recall | FP/img |
+|---|---|---|
+| `rf_drone_yolov7` (close range) | 0.939 | 0.054 |
+| `rf_anti_uav` (urban, trees, sky) | 0.894 | 0.046 |
+| `rf_anti_drone` (grass, distant) | **0.659** | **0.260** |
+
+The weak source is the operationally relevant one: distant drones over open
+terrain. It misses a third of them and raises a false positive every fourth
+frame. That, not the average, is the number to improve.
+
+#### What did not work: TTA
+
+| | mAP50 | recall |
+|---|---|---|
+| test | **0.899** | **0.834** |
+| test + TTA | 0.891 | 0.813 |
+
+The V3 section above predicts TTA is worth "a couple of points of recall". On
+this data it *costs* recall and doubles inference time. That prediction was made
+against the 42-box local test set; it does not survive a 3,069-box one. Do not
+enable `--tta` on this model.
+
+#### Still to try
+
+1. **Tiled inference** (`tiled_infer.py`). The small band at 0.787 recall is the
+   whole gap, and slicing is the one change that addresses it without
+   retraining. Untested here.
+2. **960px training.** More pixels is the other answer to small objects. mAP50
+   moved +0.0008 over the last four epochs, so the ceiling here is resolution,
+   not training time - more epochs will not help.
+3. **Fine-tune onto the local footage** once it is available:
+   `python train_v3.py --skip-a --stage-a-weights runs/detect/public_s/weights/best.pt`
 
 ### Still the priority list
 
