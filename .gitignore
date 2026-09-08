@@ -24,3 +24,8 @@ ziOJ0p7B
 .vscode/
 .idea/
 *.log
+
+# Local training environment and public-data working set
+venv/
+raw_rf/
+dataset_public/

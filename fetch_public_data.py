@@ -41,8 +41,9 @@ IMG_EXTS = (".jpg", ".jpeg", ".png", ".bmp", ".webp")
 # narrow: `bird`, `person`, `plane`, `helicopter` are NOT drones, and letting
 # them through would poison a single-class detector.
 DRONE_WORDS = re.compile(
-    r"^(drone|drones|uav|uavs|quadcopter|quadrotor|multirotor|multicopter"
-    r"|dron|flying[_ -]?drone|drone[_ -]?object|small[_ -]?uav|suav)$",
+    r"^(anti[_ -]?)?(drone|drones|uav|uavs|quadcopter|quadrotor|multirotor"
+    r"|multicopter|dron|flying[_ -]?drone|drone[_ -]?object|small[_ -]?uav"
+    r"|suav|uav[_ -]?detection|drone[_ -]?detection)$",
     re.IGNORECASE,
 )
 
@@ -57,6 +58,25 @@ SOURCES = {
              "search universe.roboflow.com for 'drone detection', open the "
              "version, choose Download -> YOLOv8 -> 'show download code', and "
              "pass the resulting link to --url instead.",
+    ),
+    "rf_anti_uav": dict(
+        kind="rf", workspace="yogith-nams8", project="anti-uav-s8wri", version=1,
+        note="9530 images, single class UAV. The largest clean single-class "
+             "drone source reachable with a free Roboflow key.",
+    ),
+    "rf_drone_yolov7": dict(
+        kind="rf", workspace="drone-detection-pexej",
+        project="drone-detection-data-set-yolov7", version=1,
+        note="1339 images, class 'drone'.",
+    ),
+    "rf_anti_drone": dict(
+        kind="rf", workspace="drone-detection-fn0bd", project="anti-drone", version=10,
+        note="3269 images, class 'Anti-Drone'.",
+    ),
+    "rf_zhejiang": dict(
+        kind="rf", workspace="zhejiang-university-china-dliq1",
+        project="drones-detection-with-yolov8", version=2,
+        note="4231 images. Mixed class naming ('0' and 'drone') - both are drones here.",
     ),
     "det_fly": dict(
         kind="manual", home="https://github.com/Jake-WU/Det-Fly",
@@ -96,11 +116,20 @@ def fetch_roboflow(spec, dest, api_key):
     rf = Roboflow(api_key=api_key)
     proj = rf.workspace(spec["workspace"]).project(spec["project"])
     ver = proj.version(spec["version"])
+    # The SDK treats an existing `location` as "already downloaded" and returns
+    # without fetching anything, so hand it a path that does not exist yet.
+    if dest.exists() and not any(dest.iterdir()):
+        dest.rmdir()
     last = None
     for fmt in ("yolov11", "yolov8"):      # identical txt format; name varies by SDK age
         try:
-            ver.download(fmt, location=str(dest))
-            return dest
+            ds = ver.download(fmt, location=str(dest))
+            got = Path(getattr(ds, "location", dest) or dest)
+            for cand in (dest, got):
+                if cand.exists() and any(
+                    q.suffix.lower() in IMG_EXTS for q in cand.rglob("*")):
+                    return cand
+            last = RuntimeError(f"download produced no images under {dest}")
         except Exception as e:
             last = e
     raise SystemExit(f"roboflow download failed: {type(last).__name__}: {last}")
@@ -407,7 +436,7 @@ def main():
             tmp := tempfile.mkdtemp(prefix=f"drone_{name}_"))
         raw.mkdir(parents=True, exist_ok=True)
         if args.source:
-            fetch_roboflow(SOURCES[args.source], raw, args.rf_key)
+            raw = fetch_roboflow(SOURCES[args.source], raw, args.rf_key)
         elif args.url:
             fetch_url(args.url, raw)
         else:

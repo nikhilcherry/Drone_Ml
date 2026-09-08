@@ -257,6 +257,96 @@ just as true for V3.
 
 Report three numbers, always together: local val, `val_ext`, and local test.
 
+---
+
+## V4: training on public data, on a split that has not been leaked into
+
+The V3 section above was never able to run: `fetch_public_data.py` could not
+download anything. Two separate faults, both now fixed.
+
+1. The curated Roboflow slug 404s - that workspace has moved or gone private.
+   Four working sources are registered in its place.
+2. `main()` pre-created the download directory, and the Roboflow SDK treats an
+   existing `location` as "already downloaded" and returns immediately without
+   fetching. The symptom was the confusing one: a clean exit reporting
+   `0 drone images` with no download progress bar and no error.
+
+### The public test splits are contaminated, and it matters
+
+Public drone datasets are video frames dealt out at random, with several
+augmented copies of each frame. The same moment of the same flight therefore
+lands in train *and* test. On the anti-UAV set:
+
+| | official random split | grouped split |
+|---|---|---|
+| test images bit-identical to a training image | 23% | 0% |
+| held-out frames within RMSE 3 of a training frame | 25% | **0.0%** |
+
+A model that memorises training frames scores near-perfectly on the official
+split without having learned anything transferable. Quoting that number would
+be the exact mistake this README spends four paragraphs refusing to make about
+the local footage.
+
+`split_public.py` fixes it. It groups the augmented copies of a source frame,
+then joins genuinely duplicated frames by 32x32 thumbnail RMSE, and deals
+*clusters* into train/val/test - the role `reshuffle_splits.py` gives a whole
+video. It then measures its own leakage and writes the result to
+`split_report.json`, so the claim is auditable rather than asserted.
+
+A note on method: an earlier version used a 256-bit average hash and reported
+27% duplicates where pixel comparison finds 4.5%. Drone imagery is mostly
+smooth sky, and aHash thresholds a smooth gradient into near-identical bit
+patterns for unrelated images. Thumbnail RMSE does not have that failure mode.
+
+### One source had to be thrown away
+
+`rf_zhejiang` declares its classes as `0` and `drone`. The normaliser correctly
+refused to treat a class named `0` as a drone, which dropped 12,183 boxes and
+silently converted 4,996 images into negatives - images that would then have
+taught the detector that drones are background. Rendering them settled it: the
+dataset is mosaic-augmented crops of blank surfaces, with `drone` boxes drawn
+on featureless white noise. It is excluded.
+
+**The general lesson, which applies to any source added later:** look at the
+images before training on them. `SOURCE.json` records
+`dropped_nondrone_boxes` and the negative count for exactly this reason - a
+large drop count on a single-class source means the class mapping is wrong or
+the data is not what it claims.
+
+### The pipeline
+
+| Step | Command |
+|---|---|
+| A. List sources | `python fetch_public_data.py --list` |
+| B. Fetch one | `python fetch_public_data.py --source rf_anti_uav --rf-key KEY` |
+| C. **Look at what arrived** | `python visualize_labels.py --n 20 --zoom` |
+| D. Build a grouped split | `python split_public.py --src external/rf_anti_uav --link` |
+| E. Check it | `python validate_labels.py --dataset dataset_public --allow-multi` |
+| F. Train | `python train_public.py --workers 3` |
+| G. Fine-tune onto local footage | `python train_v3.py --skip-a --stage-a-weights <best.pt>` |
+
+`train_public.py` is stage A of `train_v3.py` for the case where `dataset/`
+does not exist - `train_v3.py` requires the local footage and refuses to run
+without it. It selects on val, touches test once, and reports per-source and
+per-size breakdowns, because a studio catalogue shot and a 20-pixel drone over
+a field are not the same problem and averaging them hides that.
+
+### Dataset
+
+30,875 images from three verified sources, split 24,699 / 3,088 / 3,088:
+
+| Source | Images | What it contributes |
+|---|---|---|
+| `rf_anti_uav` | 19,834 | drones over buildings, trees, open sky; mostly tiny |
+| `rf_anti_drone` | 7,862 | **grass fields and overcast sky** - limitation #1 |
+| `rf_drone_yolov7` | 3,165 | close-range studio shots; what a drone looks like |
+
+**66% of boxes are smaller than 32x32 px.** The local dataset has exactly one
+such box in 280. This set can finally measure the distance case the project
+was built for, and it is a much harder problem than the courtyard footage -
+scores here are not comparable to the V2 row above, and are not meant to be.
+
+
 ### Still the priority list
 
 Public data narrows the gap; it does not close it. Nothing online was shot on
