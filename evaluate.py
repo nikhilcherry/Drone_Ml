@@ -6,17 +6,22 @@ Evaluate an already-trained drone model. Does NOT retrain.
   3. saves annotated predictions on every test image
   4. breaks recall down by drone size: small / medium / large
 
+Two switches buy accuracy with no retraining:
+  --tta    test-time augmentation (flips/scales, merged). Slower, usually
+           worth a couple of points of recall.
+  --tile   sliced inference (see tiled_infer.py). This is the one that moves
+           the small-drone band, because a 640 px crop shows the network a
+           30x15 px drone several times larger than the full frame does.
+
     python evaluate.py
     python evaluate.py --weights path/to/best.pt --conf 0.25
+    python evaluate.py --weights best.pt --imgsz 960 --tta
+    python evaluate.py --weights best.pt --imgsz 960 --tile --tile-size 640
 """
 import argparse
 from pathlib import Path
 
 import numpy as np
-
-DATA   = "dataset/data.yaml"
-IMAGES = Path("dataset/images/test")
-LABELS = Path("dataset/labels/test")
 
 # GT box area thresholds in pixels (COCO-style)
 SMALL_MAX  = 32 * 32
@@ -49,7 +54,19 @@ def main():
     ap.add_argument("--conf", type=float, default=0.25)
     ap.add_argument("--imgsz", type=int, default=640)
     ap.add_argument("--device", default="0")
+    ap.add_argument("--dataset", default="dataset",
+                    help="dataset folder (default: dataset)")
+    ap.add_argument("--tta", action="store_true",
+                    help="test-time augmentation")
+    ap.add_argument("--tile", action="store_true",
+                    help="sliced inference for the size breakdown")
+    ap.add_argument("--tile-size", type=int, default=640)
+    ap.add_argument("--overlap", type=float, default=0.25)
     args = ap.parse_args()
+
+    data = str(Path(args.dataset) / "data.yaml")
+    images = Path(args.dataset) / "images" / "test"
+    labels = Path(args.dataset) / "labels" / "test"
 
     from ultralytics import YOLO
     w = Path(args.weights) if args.weights else find_weights()
@@ -57,7 +74,10 @@ def main():
     model = YOLO(str(w))
 
     print("=== TEST SET (held out, evaluated once) ===")
-    m = model.val(data=DATA, split="test", imgsz=args.imgsz,
+    if args.tile:
+        print("  (mAP below is the standard full-frame val; Ultralytics' val\n"
+              "   cannot slice. The tiled gain shows in the size breakdown.)")
+    m = model.val(data=data, split="test", imgsz=args.imgsz, augment=args.tta,
                   device=args.device, plots=True, name="drone_v1_test")
     print(f"  Precision: {m.box.mp:.4f}")
     print(f"  Recall:    {m.box.mr:.4f}")
@@ -65,19 +85,22 @@ def main():
     print(f"  mAP50-95:  {m.box.map:.4f}")
 
     print("\n=== annotated predictions ===")
-    model.predict(source=str(IMAGES), imgsz=args.imgsz, device=args.device,
-                  conf=args.conf, save=True, name="drone_v1_test_predictions",
-                  exist_ok=True, verbose=False)
+    model.predict(source=str(images), imgsz=args.imgsz, device=args.device,
+                  conf=args.conf, augment=args.tta, save=True,
+                  name="drone_v1_test_predictions", exist_ok=True, verbose=False)
 
-    print("\n=== SIZE BREAKDOWN (recall at IoU>=0.5, "
-          f"conf>={args.conf}) ===")
+    mode = ("tiled" if args.tile else "full-frame") + (" + TTA" if args.tta else "")
+    print(f"\n=== SIZE BREAKDOWN (recall at IoU>=0.5, conf>={args.conf}, "
+          f"{mode}) ===")
     import cv2
     bands = {"small (<32x32)": [], "medium (32-96)": [], "large (>96x96)": []}
     ious_by_band = {k: [] for k in bands}
-    for img_path in sorted(IMAGES.iterdir()):
+    if args.tile:
+        from tiled_infer import predict_tiled
+    for img_path in sorted(images.iterdir()):
         if img_path.suffix.lower() not in (".jpg", ".jpeg", ".png"):
             continue
-        lf = LABELS / (img_path.stem + ".txt")
+        lf = labels / (img_path.stem + ".txt")
         if not lf.exists():
             continue
         lines = [l for l in lf.read_text().splitlines() if l.strip()]
@@ -90,10 +113,17 @@ def main():
             _, cx, cy, nw, nh = (float(v) for v in line.split())
             gts.append(((cx-nw/2)*W, (cy-nh/2)*H, (cx+nw/2)*W, (cy+nh/2)*H))
 
-        r = model.predict(source=str(img_path), imgsz=args.imgsz,
-                          device=args.device, conf=args.conf, verbose=False)[0]
-        preds = ([tuple(b) for b in r.boxes.xyxy.cpu().numpy()]
-                 if r.boxes is not None else [])
+        if args.tile:
+            preds = [tuple(b[:4]) for b in predict_tiled(
+                model, im, tile=args.tile_size, overlap=args.overlap,
+                conf=args.conf, device=args.device, full_imgsz=args.imgsz,
+                tta=args.tta)]
+        else:
+            r = model.predict(source=str(img_path), imgsz=args.imgsz,
+                              device=args.device, conf=args.conf,
+                              augment=args.tta, verbose=False)[0]
+            preds = ([tuple(b) for b in r.boxes.xyxy.cpu().numpy()]
+                     if r.boxes is not None else [])
 
         for g in gts:
             area = (g[2]-g[0]) * (g[3]-g[1])

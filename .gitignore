@@ -10,6 +10,8 @@ weights/
 
 # Datasets, Videos, and Runs
 dataset/
+dataset_combined/
+external/
 videos/
 runs/
 _to_delete/
