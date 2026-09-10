@@ -1,0 +1,24 @@
+# ByteTrack tuned for drones that the detector sees but is not confident about.
+#
+# Measured on val (tools/conf_floor.py): at conf 0.25 the detector has no
+# overlapping prediction for 18.8% of GT boxes; at conf 0.001 that falls to
+# 1.8%. So it responds to ~98% of drones and simply scores them low - the
+# boxes recovered below 0.25 have a MEDIAN confidence of 0.074.
+#
+# That is exactly the regime ByteTrack was designed for: its second association
+# stage exists to keep a track alive using low-scoring boxes. Stock
+# track_low_thresh is 0.1, which is above the median of the boxes that matter
+# here, so the band is nearly empty. Lowered to 0.03.
+#
+# track_high_thresh / new_track_thresh are deliberately NOT lowered. Starting a
+# track still requires a confident detection, so faint noise cannot spawn
+# tracks; it can only help sustain a track that a confident frame already
+# created. track_buffer is doubled because these detections drop out often.
+
+tracker_type: bytetrack
+track_high_thresh: 0.25 # first-stage match: unchanged, keeps tracks clean
+track_low_thresh: 0.03 # second-stage: was 0.1, above the median of what we need
+new_track_thresh: 0.25 # unchanged: a NEW track still needs a confident box
+track_buffer: 60 # was 30: small drones drop out for long runs of frames
+match_thresh: 0.8
+fuse_score: True

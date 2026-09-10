@@ -14,7 +14,10 @@ recorded footage). It is roughly `tiles + 1` forward passes per frame, so a 2x2
 grid is ~5x slower than a plain pass.
 
     python tiled_infer.py --weights best.pt --source dataset/images/test --save
-    python tiled_infer.py --weights best.pt --source clip.mp4 --tile 512 --overlap 0.3
+    python tiled_infer.py --weights best.pt --source clip.mp4 --tile 256 --net 640
+
+Note: --tile is in SOURCE pixels and must be smaller than the frame, and --net
+(default 2*tile) is what the crop is resized to. Magnification is net/tile.
 
 Importable:
     from tiled_infer import predict_tiled
@@ -64,8 +67,24 @@ def nms(boxes, iou_thr=0.5):
 
 
 def predict_tiled(model, image, tile=640, overlap=0.25, conf=0.25, device="0",
-                  iou_merge=0.5, full_pass=True, full_imgsz=960, tta=False):
+                  iou_merge=0.5, full_pass=True, full_imgsz=960, tta=False,
+                  net=None, drop_edge=True, edge_px=2):
     """Detect on overlapping tiles + (optionally) the whole frame.
+
+    `net` is the size the CROPS are run at. It must be LARGER than `tile` for
+    slicing to buy anything: the entire point is that a `tile` px crop arrives
+    at the network magnified by net/tile, so a 20 px drone is seen at 40 px.
+    Passing net == tile (which is what this function used to do, implicitly)
+    hands the network the same pixels at the same scale and gains nothing.
+    Defaults to 2x magnification.
+
+    `drop_edge` discards detections that touch a tile's INTERIOR edge. An object
+    larger than the tile is cut by it, and each crop then reports a box around
+    the fragment it can see; those fragments do not match the whole object and
+    are counted as false positives. Measured on 120 val images whose drones are
+    all >96 px, tiling without this raises false positives from 5 to 242. The
+    overlap is what makes dropping them safe: an object near one tile's edge sits
+    well inside its neighbour, so it is still detected once, whole.
 
     Returns Nx5 float32 (x1, y1, x2, y2, conf) in full-image pixel coordinates.
     """
@@ -74,6 +93,14 @@ def predict_tiled(model, image, tile=640, overlap=0.25, conf=0.25, device="0",
         raise ValueError(f"cannot read image: {image}")
     H, W = img.shape[:2]
     tile = min(tile, max(H, W))
+    if tile >= W and tile >= H:
+        # one tile covering the whole frame - slicing is a no-op. The public
+        # dataset is natively 640x640, so the documented `--tile 640` lands
+        # here and silently does nothing.
+        import warnings
+        warnings.warn(f"tile={tile} covers the whole {W}x{H} frame: no slicing "
+                      f"will happen. Use a tile smaller than the image.",
+                      stacklevel=2)
     out = []
 
     crops, offsets = [], []
@@ -84,13 +111,30 @@ def predict_tiled(model, image, tile=640, overlap=0.25, conf=0.25, device="0",
 
     # one batched call per frame beats one call per tile
     if crops:
-        res = model.predict(crops, imgsz=tile, device=device, conf=conf,
+        net_sz = net if net is not None else tile * 2
+        res = model.predict(crops, imgsz=net_sz, device=device, conf=conf,
                             augment=tta, verbose=False)
-        for r, (ox, oy) in zip(res, offsets):
+        for r, (ox, oy), crop in zip(res, offsets, crops):
             if r.boxes is None or not len(r.boxes):
                 continue
             xyxy = r.boxes.xyxy.cpu().numpy()
             cf = r.boxes.conf.cpu().numpy()
+            if drop_edge:
+                th, tw = crop.shape[:2]
+                # a tile edge that lies on the image border is a real edge, not
+                # a cut, so a box touching it is not a fragment
+                keep = np.ones(len(xyxy), dtype=bool)
+                if ox > 0:
+                    keep &= xyxy[:, 0] > edge_px
+                if oy > 0:
+                    keep &= xyxy[:, 1] > edge_px
+                if ox + tw < W:
+                    keep &= xyxy[:, 2] < tw - edge_px
+                if oy + th < H:
+                    keep &= xyxy[:, 3] < th - edge_px
+                xyxy, cf = xyxy[keep], cf[keep]
+                if not len(xyxy):
+                    continue
             xyxy[:, [0, 2]] += ox
             xyxy[:, [1, 3]] += oy
             out.append(np.column_stack([xyxy, cf]))
@@ -116,13 +160,24 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--weights", required=True)
     ap.add_argument("--source", required=True, help="image, folder, or video")
-    ap.add_argument("--tile", type=int, default=640)
+    ap.add_argument("--tile", type=int, default=320,
+                    help="crop size in source pixels. MUST be smaller than the "
+                         "image or slicing does nothing (the public data is "
+                         "640x640, so the old 640 default was a no-op)")
+    ap.add_argument("--net", type=int, default=None,
+                    help="size the crops are run at; defaults to 2*tile. "
+                         "net>tile is what magnifies the drone")
     ap.add_argument("--overlap", type=float, default=0.25)
     ap.add_argument("--conf", type=float, default=0.25)
     ap.add_argument("--imgsz", type=int, default=960, help="full-frame pass size")
     ap.add_argument("--device", default="0")
     ap.add_argument("--tta", action="store_true", help="also flip/scale augment")
     ap.add_argument("--no-full-pass", action="store_true")
+    ap.add_argument("--keep-edge", action="store_true",
+                    help="keep detections touching a tile's interior edge. "
+                         "They are usually fragments of an object the crop cut "
+                         "in half; keeping them cost 5 -> 242 false positives "
+                         "on large drones in testing")
     ap.add_argument("--save", action="store_true", help="write annotated output")
     ap.add_argument("--out", default="tiled_output")
     args = ap.parse_args()
@@ -143,7 +198,8 @@ def main():
 
     kw = dict(tile=args.tile, overlap=args.overlap, conf=args.conf,
               device=args.device, full_pass=not args.no_full_pass,
-              full_imgsz=args.imgsz, tta=args.tta)
+              full_imgsz=args.imgsz, tta=args.tta, net=args.net,
+              drop_edge=not args.keep_edge)
 
     if src.suffix.lower() in (".mp4", ".mov", ".avi", ".mkv", ".webm"):
         cap = cv2.VideoCapture(str(src))

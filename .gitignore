@@ -29,3 +29,12 @@ ziOJ0p7B
 venv/
 raw_rf/
 dataset_public/
+dataset_tiled/
+
+# accuracy investigation working files
+.cache_gt_*.json
+sweep_*.json
+exp_*.json
+negative_audit.json
+fp_*.json
+loc_analysis.json

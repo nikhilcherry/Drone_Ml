@@ -51,7 +51,12 @@ from PIL import Image
 
 IMG_EXTS = (".jpg", ".jpeg", ".png", ".bmp", ".webp")
 THUMB = 32                                    # 32x32 grey thumbnail per image
-RF_COPY = re.compile(r"_jpg\.rf\.[0-9a-f]+$")    # Roboflow augmented-copy suffix
+# Roboflow stamps the ORIGINAL file's extension into the copy suffix, so a PNG
+# source yields `_png.rf.<hash>`, not `_jpg.rf.<hash>`. Matching only _jpg left
+# those copies ungrouped, and they could then be dealt into different splits.
+# Small here (9 images, 1 group spanning train/test) but silent, and it scales
+# with any source that was not JPEG originally.
+RF_COPY = re.compile(r"_(?:jpg|jpeg|png|bmp|webp|tif|tiff)\.rf\.[0-9a-f]+$", re.I)
 
 
 def source_stem(path):
@@ -128,23 +133,54 @@ def assign(sizes, frac_val, frac_test):
     return where
 
 
-def verify(X, cluster_split, clusters, sample=400, seed=0):
-    """How close is the nearest training image to each test image? Lower = leakier."""
+def verify(pairs, where, clusters, sample=1200, seed=0, chunk=256):
+    """How close is the nearest training image to each held-out image?
+
+    This used to be called with the REPRESENTATIVE thumbnails and the unit
+    clusters, which made it tautological: the union-find above has already
+    guaranteed that representatives in different clusters are more than
+    `dup_rmse` apart, so `pct_within_3` was mathematically forced to 0.0 and
+    reported a clean split no matter what the data looked like. It also
+    compared against a 4,000-image sample of train - 16% of it - so it usually
+    missed the true nearest neighbour and inflated the median.
+
+    Measuring all ACTUAL images against the FULL training set instead finds
+    residual near-duplicates: on the shipped split, 11.9% of test images are
+    within RMSE 1 of a training image and 23.8% within RMSE 3. Those are
+    different augmented copies of the same moment whose representatives drifted
+    apart far enough not to be joined - real leakage, worth about +0.037 mAP50
+    on the affected images (see docs/ACCURACY_INVESTIGATION.md).
+    """
     rng = np.random.default_rng(seed)
-    tr = [i for c, members in enumerate(clusters) if cluster_split[c] == "train" for i in members]
-    te = [i for c, members in enumerate(clusters) if cluster_split[c] == "test" for i in members]
-    if not tr or not te:
-        return {}
-    te = rng.choice(te, min(sample, len(te)), replace=False)
-    tr = rng.choice(tr, min(4000, len(tr)), replace=False)
-    A, B = X[te], X[tr]
-    d = np.sqrt(np.maximum((A * A).sum(1)[:, None] + (B * B).sum(1)[None, :]
-                           - 2 * A @ B.T, 0) / X.shape[1])
-    mn = d.min(1)
-    return {"median_nearest_rmse": round(float(np.median(mn)), 1),
+    tr_i = [i for c, members in enumerate(clusters) if where[c] == "train" for i in members]
+    out = {}
+    if not tr_i:
+        return out
+    print(f"  leak check: thumbnailing {len(tr_i)} training images "
+          f"(the old check sampled 4,000 of them and missed the real "
+          f"nearest neighbour) ...", flush=True)
+    TR = np.stack([thumb(pairs[i][0]) for i in tr_i])
+    trn = (TR * TR).sum(1)
+    for split in ("val", "test"):
+        ev_i = [i for c, members in enumerate(clusters) if where[c] == split for i in members]
+        if not ev_i:
+            continue
+        if len(ev_i) > sample:
+            ev_i = list(rng.choice(ev_i, sample, replace=False))
+        EV = np.stack([thumb(pairs[i][0]) for i in ev_i])
+        mn = np.empty(len(EV), np.float32)
+        for s0 in range(0, len(EV), chunk):
+            e = EV[s0:s0 + chunk]
+            d2 = (e * e).sum(1)[:, None] + trn[None, :] - 2.0 * e @ TR.T
+            np.maximum(d2, 0, out=d2)
+            mn[s0:s0 + len(e)] = np.sqrt(d2.min(1) / EV.shape[1])
+        out[f"{split}_vs_train_similarity"] = {
+            "compared": len(EV), "against_train": len(TR),
+            "median_nearest_rmse": round(float(np.median(mn)), 1),
             "pct_within_1": round(float((mn <= 1).mean() * 100), 1),
             "pct_within_3": round(float((mn <= 3).mean() * 100), 1),
             "pct_within_6": round(float((mn <= 6).mean() * 100), 1)}
+    return out
 
 
 def main():
@@ -177,7 +213,7 @@ def main():
 
     # 2. duplicate source frames are one cluster
     print(f"  thumbnailing and de-duplicating at RMSE <= {args.dup_rmse} ...")
-    unit_clusters, X = duplicate_clusters(reps, args.dup_rmse)
+    unit_clusters, _ = duplicate_clusters(reps, args.dup_rmse)
     clusters = [[i for u in c for i in units[unit_keys[u]]] for c in unit_clusters]
     sizes = [len(c) for c in clusters]
     multi = sum(1 for c in unit_clusters if len(c) > 1)
@@ -209,7 +245,7 @@ def main():
             counts[split][1] += n
             counts[split][2] += (n == 0)
 
-    leak = verify(X, where, unit_clusters)
+    leak = verify(pairs, where, clusters)
 
     (out / "data.yaml").write_text(
         f"path: {out.resolve()}\ntrain: images/train\nval: images/val\n"
@@ -219,7 +255,7 @@ def main():
         "clusters": len(clusters), "dup_rmse": args.dup_rmse,
         "counts": {s: dict(zip(("images", "boxes", "negatives"), v))
                    for s, v in counts.items()},
-        "test_vs_train_similarity": leak,
+        **leak,
     }, indent=1), encoding="utf-8")
 
     print("\nsplit          images   boxes   negatives")
@@ -227,13 +263,19 @@ def main():
         i, b, n = counts[s]
         print(f"  {s:<10} {i:>7} {b:>7} {n:>11}")
     if leak:
-        print(f"\nleak check - nearest training image to each test image "
-              f"(thumbnail RMSE, 0-255):")
-        print(f"  median {leak['median_nearest_rmse']}   "
-              f"within 1: {leak['pct_within_1']}%   "
-              f"within 3: {leak['pct_within_3']}%   "
-              f"within 6: {leak['pct_within_6']}%")
-        print("  (the official random split scores ~4.5% within 1 and 25% within 3)")
+        print("\nleak check - nearest TRAINING image to each held-out image")
+        print("  (thumbnail RMSE 0-255; every image, against the full train set)")
+        for key, v in leak.items():
+            split = key.split("_")[0]
+            print(f"  {split:<5} n={v['compared']:<5} vs {v['against_train']:<6} "
+                  f"median {v['median_nearest_rmse']:<6} "
+                  f"within 1: {v['pct_within_1']}%   "
+                  f"within 3: {v['pct_within_3']}%   "
+                  f"within 6: {v['pct_within_6']}%")
+        print("  For reference the official random split scores ~4.5% within 1 and")
+        print("  25% within 3. A grouped split should be well under that; anything")
+        print("  above a few percent within RMSE 1 means augmented copies of one")
+        print("  moment have landed in two splits and the score is optimistic.")
     print(f"\nwrote {out}/data.yaml and {out}/split_report.json")
 
 

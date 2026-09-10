@@ -11,6 +11,18 @@ Real-time drone detection + tracking with the V1 model.
 ByteTrack keeps a drone's ID alive across frames where detection drops out,
 which matters here: V1 detects intermittently, so raw per-frame boxes flicker.
 
+The detector is far less blind than its confident output suggests. Measured on
+val: at conf 0.25 it has no box at all for 18.8% of ground-truth drones; at
+conf 0.001 that falls to 1.8%. It sees ~98% of them and scores them low - the
+ones it loses at 0.25 have a median confidence of 0.074. Feeding the tracker
+only boxes above 0.25 therefore throws away precisely the weak detections
+ByteTrack's second association stage exists to use. `--det-floor` (default 0.03)
+is what reaches the tracker; `--conf` still governs what counts as a confident
+detection. NOT YET VALIDATED ON VIDEO - there is no footage in this repo to
+test it against. The still-image measurement behind it is in
+docs/ACCURACY_INVESTIGATION.md; validating it needs a clip and a count of
+how long a track survives.
+
 Press Q to quit.
 
 --tile runs sliced inference (tiled_infer.py): far better on distant drones,
@@ -45,6 +57,19 @@ def main():
     ap.add_argument("--conf", type=float, default=0.25,
                     help="0.25 was the F1 optimum on val; lower = more "
                          "detections and more false alarms")
+    ap.add_argument("--det-floor", type=float, default=0.03,
+                    help="detector floor fed to the TRACKER (not the display). "
+                         "ByteTrack's second association stage needs low-score "
+                         "boxes to keep a track alive, and on this data the "
+                         "drones that go missing at conf 0.25 have a median "
+                         "confidence of 0.074 - filtering at 0.25 in the "
+                         "detector leaves that stage nothing to work with. "
+                         "Starting a NEW track still needs conf >= "
+                         "new_track_thresh, so this cannot spawn noise tracks. "
+                         "Set equal to --conf to restore the old behaviour")
+    ap.add_argument("--tracker", default="cfg/bytetrack_drone.yaml",
+                    help="tracker config; the shipped bytetrack.yaml has "
+                         "track_low_thresh 0.1, too high for this detector")
     ap.add_argument("--imgsz", type=int, default=640)
     ap.add_argument("--device", default="0")
     ap.add_argument("--save", action="store_true", help="write annotated mp4")
@@ -52,7 +77,9 @@ def main():
                     help="test-time augmentation: more recall, fewer FPS")
     ap.add_argument("--tile", action="store_true",
                     help="sliced inference for distant drones; disables tracking")
-    ap.add_argument("--tile-size", type=int, default=640)
+    ap.add_argument("--tile-size", type=int, default=320,
+                    help="crop size in source pixels; must be SMALLER than the "
+                         "frame or slicing does nothing")
     ap.add_argument("--overlap", type=float, default=0.25)
     args = ap.parse_args()
 
@@ -94,8 +121,9 @@ def main():
         else:
             # persist=True keeps track IDs alive between calls
             r = model.track(frame, imgsz=args.imgsz, device=args.device,
-                            conf=args.conf, persist=True, augment=args.tta,
-                            tracker="bytetrack.yaml", verbose=False)[0]
+                            conf=min(args.det_floor, args.conf), persist=True,
+                            augment=args.tta, tracker=args.tracker,
+                            verbose=False)[0]
             boxes = []
             if r.boxes is not None and len(r.boxes):
                 ids = (r.boxes.id.int().tolist()

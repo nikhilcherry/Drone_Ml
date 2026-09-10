@@ -7,16 +7,18 @@ Evaluate an already-trained drone model. Does NOT retrain.
   4. breaks recall down by drone size: small / medium / large
 
 Two switches buy accuracy with no retraining:
-  --tta    test-time augmentation (flips/scales, merged). Slower, usually
-           worth a couple of points of recall.
-  --tile   sliced inference (see tiled_infer.py). This is the one that moves
-           the small-drone band, because a 640 px crop shows the network a
-           30x15 px drone several times larger than the full frame does.
+  --tta    test-time augmentation (flips/scales, merged). Measured a LOSS on
+           the public data - see the README's V4 section and docs/EXPERIMENTS.md.
+           Do not enable it on that model.
+  --tile   sliced inference (see tiled_infer.py). This is the one that moves the
+           small-drone band, because a crop run at a LARGER network size shows
+           the drone magnified. Note the tile must be smaller than the image:
+           the public frames are natively 640x640, so --tile-size 640 is one
+           tile covering the whole frame and does nothing at all.
 
     python evaluate.py
     python evaluate.py --weights path/to/best.pt --conf 0.25
-    python evaluate.py --weights best.pt --imgsz 960 --tta
-    python evaluate.py --weights best.pt --imgsz 960 --tile --tile-size 640
+    python evaluate.py --weights best.pt --tile --tile-size 320
 """
 import argparse
 from pathlib import Path
@@ -57,10 +59,14 @@ def main():
     ap.add_argument("--dataset", default="dataset",
                     help="dataset folder (default: dataset)")
     ap.add_argument("--tta", action="store_true",
-                    help="test-time augmentation")
+                    help="test-time augmentation (measured as a LOSS on the "
+                         "public data - see docs/EXPERIMENTS.md)")
     ap.add_argument("--tile", action="store_true",
                     help="sliced inference for the size breakdown")
-    ap.add_argument("--tile-size", type=int, default=640)
+    ap.add_argument("--tile-size", type=int, default=320,
+                    help="crop size in source pixels; MUST be smaller than the "
+                         "image or slicing is a no-op. Crops are run at 2x this "
+                         "size, which is where the magnification comes from")
     ap.add_argument("--overlap", type=float, default=0.25)
     args = ap.parse_args()
 

@@ -22,7 +22,10 @@ python realtime_track.py --weights "runs/detect/public_s/weights/best.pt" --imgs
 python realtime_track.py --weights "runs\detect\runs\detect\v2_hires\weights\best.pt" --imgsz 960
 ```
 
-Do not pass `--tta` to V4: it measurably hurts (see V4 results below).
+Do not pass `--tta` to V4: it measurably hurts (see V4 results below). Do pass
+`--tile`, which is now fixed and worth ~10 points of recall on the smallest
+drones - `docs/ACCURACY_INVESTIGATION.md` has the measurements, and
+`docs/EXPERIMENTS.md` logs what else was tried and rejected.
 
 ---
 
@@ -115,6 +118,7 @@ CUDA build of torch (`train.py` refuses to run on CPU). The V3 steps below add
 | 7. Train | `python train.py` |
 | 8. Evaluate on test + size breakdown | `python evaluate.py` |
 | 9. Live detection + ByteTrack | `python realtime_track.py --imgsz 960` |
+| 10. Tests (split integrity) | `python -m pytest tests/ -q` |
 
 ### V3 pipeline — public data (see "V3: more data, from the internet" below)
 
@@ -371,9 +375,22 @@ that matters in the field.
 
 **Val and test agree to within 0.004.** That is the point of the grouped split.
 The local V2 numbers disagreed by 0.09 across splits, which is why this README
-warns that differences under 0.1 there are noise. With 3,069 test boxes and no
-leakage, 0.899 is a measurement rather than an estimate. It is *not* comparable
-to the V2 row - different data, and a far harder one.
+warns that differences under 0.1 there are noise.
+
+**Correction: the split is not leak-free, and the check that said it was could
+not have detected otherwise.** `split_report.json`'s `pct_within_3: 0.0` was
+produced by comparing cluster *representatives*, which the de-duplication had
+already forced apart by construction, against a 16% sample of train. Measuring
+every actual image against the full training set finds **11.9% of test within
+RMSE 1** of a training image and 23.8% within RMSE 3 - the same moment in both
+splits as different augmented copies. Controlled for source and box size, that
+is worth **+0.037 mAP50 on the images it touches**, so the headline is
+optimistic by roughly **0.004-0.01**. Both faults are fixed in
+`split_public.py`; the full working is in `docs/ACCURACY_INVESTIGATION.md`.
+
+So 0.899 is a good measurement with a known small bias, not the leak-free figure
+claimed above - still far better than the official random split (23% bit
+identical), and still *not* comparable to the V2 row.
 
 #### Recall by drone size - where the missing 10% lives
 
@@ -411,14 +428,20 @@ this data it *costs* recall and doubles inference time. That prediction was made
 against the 42-box local test set; it does not survive a 3,069-box one. Do not
 enable `--tta` on this model.
 
-#### Still to try
+#### Tried since - see `docs/ACCURACY_INVESTIGATION.md`
 
-1. **Tiled inference** (`tiled_infer.py`). The small band at 0.787 recall is the
-   whole gap, and slicing is the one change that addresses it without
-   retraining. Untested here.
-2. **960px training.** More pixels is the other answer to small objects. mAP50
-   moved +0.0008 over the last four epochs, so the ceiling here is resolution,
-   not training time - more epochs will not help.
+1. **Tiled inference** - the instinct was right, the implementation was not.
+   `--tile 640` on 640 px images is one tile covering the frame, and the crops
+   were run at `imgsz=tile`, so nothing was ever magnified. Both fixed. Once it
+   magnifies 2x and drops tile-edge fragments, on val subsets chosen to be hard:
+   sub-16px recall **0.447 -> 0.547**, large-box recall **0.908 -> 0.925**, with
+   large-box false positives held at 8 (they were 242 before edge-dropping).
+   No retraining.
+2. **960px training - do not.** Inference-resolution sweeps show upscaling helps
+   the small band (+2.1 pts) and destroys the large one (-12.4 pts), because
+   `rf_drone_yolov7` is 96.8% large at 382 px median and leaves the trained
+   scale range. This dataset is bimodal; one scale cannot serve both. It is also
+   why TTA lost.
 3. **Fine-tune onto the local footage** once it is available:
    `python train_v3.py --skip-a --stage-a-weights runs/detect/public_s/weights/best.pt`
 

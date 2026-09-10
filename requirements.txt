@@ -1,0 +1,27 @@
+# Drone detection - runtime dependencies.
+#
+# torch must be a CUDA build; train.py and train_public.py refuse to run on CPU.
+# The pinned cu128 wheels below are what this project was developed and measured
+# against (an RTX 5050 is Blackwell and needs cu128 or newer). Install torch
+# FIRST, from the PyTorch index, then the rest:
+#
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+#   pip install -r requirements.txt
+
+ultralytics==8.4.143
+opencv-python==5.0.0.93
+numpy==2.3.5
+Pillow==12.3.0
+
+# torch/torchvision are listed for the record; see the note above about
+# installing them from the CUDA index rather than PyPI.
+# torch==2.11.0+cu128
+# torchvision==0.26.0+cu128
+
+# Only needed for fetching Roboflow sources (fetch_public_data.py --source rf_*)
+# roboflow
+
+# --- dev ---
+# tests/ covers the split-integrity regressions described in
+# docs/ACCURACY_INVESTIGATION.md. Run: python -m pytest tests/ -q
+pytest>=8.0
